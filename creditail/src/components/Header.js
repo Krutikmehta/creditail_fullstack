@@ -1,6 +1,7 @@
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
-const backButton = require('../../src/assests/Images/Vector.png');
+import {useNavigation} from '@react-navigation/native';
+const backButton = require('../../src/assests/Images/vector.png');
 
 export default function Header(props) {
   return (
@@ -12,10 +13,12 @@ export default function Header(props) {
         flexDirection: 'row',
         alignItems: 'center',
       }}>
-      <Image
-        source={backButton}
-        style={{width: 16, aspectRatio: 1, marginLeft: 16}}
-      />
+      <TouchableOpacity onPress={() => props.navigation.goBack()}>
+        <Image
+          source={backButton}
+          style={{width: 16, aspectRatio: 1, marginLeft: 16}}
+        />
+      </TouchableOpacity>
       <View
         style={{
           flexDirection: 'column',

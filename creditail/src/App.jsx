@@ -27,6 +27,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import Homescreen from './containers/Homescreen';
 import PaymentScreen from './containers/PaymentScreen';
+import CashScreen from './containers/CashScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -57,6 +58,10 @@ function App() {
          <Stack.Screen
           name="Payment"
           component={PaymentScreen}
+        />
+        <Stack.Screen
+          name="Cash"
+          component={CashScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

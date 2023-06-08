@@ -50,6 +50,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  selectedModeCard: {
+    borderColor: '#2760B6',
+    backgroundColor: '#DFE8F4',
+    borderWidth: 1,
+  },
   modeText: {
     fontFamily: 'Poppins',
     fontStyle: 'normal',
@@ -82,6 +87,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
     color: '#5F5F5F',
+  },
+  selectedConfirmButton: {
+    backgroundColor: '#2760B6',
+  },
+  selectedConfirmText: {
+    color: '#FFFFFF',
   },
 });
 
