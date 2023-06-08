@@ -9,7 +9,7 @@ import {
 import React from 'react';
 import styles from './Styles/HomescreenStyles';
 import Header from '../components/Header';
-const backButton = require('../../src/assests/Images/Vector.png');
+const backButton = require('../../src/assests/Images/vector.png');
 
 export default function Homescreen({navigation}) {
   const navigateToPayment = () => {

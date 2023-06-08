@@ -1,22 +1,27 @@
 import {View, Text, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import Header from '../components/Header';
 import styles from './Styles/PaymentScreenStyles';
 
 const PAYMENT_MODES = [{mode: 'Online'}, {mode: 'Cash'}, {mode: 'Cheque'}];
 
-export default function PaymentScreen() {
+export default function PaymentScreen({navigation}) {
+  const [selected, setSelected] = useState(-1);
+
   const paymentCard = ({item, index}) => {
     return (
-      <View style={styles.modeCard}>
+      <TouchableOpacity
+        style={[styles.modeCard, index === selected && styles.selectedModeCard]}
+        key={index}
+        onPress={() => setSelected(index)}>
         <Text style={styles.modeText}>{item.mode}</Text>
-      </View>
+      </TouchableOpacity>
     );
   };
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
       {/* header */}
-      <Header>
+      <Header navigation={navigation}>
         <Text
           style={{
             fontFamily: 'Poppins',
@@ -55,16 +60,27 @@ export default function PaymentScreen() {
         <View style={styles.paymentsView}>
           <Text style={styles.paymentMethodText}>Choose Payment Method</Text>
           <View style={styles.paymentModesView}>
-            {PAYMENT_MODES.map(item => {
-              return paymentCard({item});
+            {PAYMENT_MODES.map((item, index) => {
+              return paymentCard({item, index});
             })}
           </View>
         </View>
       </View>
 
       {/* Confirm Button */}
-      <TouchableOpacity style={styles.confirmButton}>
-        <Text style={styles.confirmText}>Confirm</Text>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Cash')}
+        style={[
+          styles.confirmButton,
+          selected >= 0 && styles.selectedConfirmButton,
+        ]}>
+        <Text
+          style={[
+            styles.confirmText,
+            selected >= 0 && styles.selectedConfirmText,
+          ]}>
+          Confirm
+        </Text>
       </TouchableOpacity>
     </View>
   );
