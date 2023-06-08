@@ -38,14 +38,6 @@ function App() {
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
-
-  const renderHeader = () =>{
-    return(
-      <View>
-        <Text>Header</Text>
-      </View>
-    )
-  }
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Home'  screenOptions={{

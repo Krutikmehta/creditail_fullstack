@@ -1,11 +1,16 @@
-import {View, Text, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
+import {View, Text, TouchableOpacity, TextInput, Alert} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import Header from '../components/Header';
+import axios from 'axios';
 import styles from './Styles/PaymentScreenStyles';
 
 const PAYMENT_MODES = [{mode: 'Online'}, {mode: 'Cash'}, {mode: 'Cheque'}];
 
-export default function PaymentScreen({navigation}) {
+export default function PaymentScreen(props) {
+  const {navigation, route} = props;
+
+  const [data, setDate] = useState(route.params.data);
+  const [amount, setAmount] = useState(route.params.data.pendingAmount);
   const [selected, setSelected] = useState(-1);
 
   const paymentCard = ({item, index}) => {
@@ -18,40 +23,44 @@ export default function PaymentScreen({navigation}) {
       </TouchableOpacity>
     );
   };
+
+  const onChangeText = input => {
+    if (input <= data.pendingAmount) {
+      setAmount(input);
+      return;
+    }
+    Alert.alert(
+      'Invalid amount',
+      `Please enter an amount less than ${data.pendingAmount}`,
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ],
+    );
+  };
   return (
-    <View style={{flex: 1, backgroundColor: 'white'}}>
+    <View style={styles.container}>
       {/* header */}
       <Header navigation={navigation}>
-        <Text
-          style={{
-            fontFamily: 'Poppins',
-            fontStyle: 'normal',
-            fontWeight: 400,
-            fontSize: 16,
-            lineHeight: 24,
-            color: '#ECECEC',
-            marginLeft: 24,
-          }}>
-          Invoices
-        </Text>
-        <Text
-          style={{
-            fontFamily: 'Poppins',
-            fontStyle: 'normal',
-            fontWeight: 400,
-            fontSize: 16,
-            lineHeight: 24,
-            color: '#ECECEC',
-            marginLeft: 24,
-          }}>
-          Invoices
-        </Text>
+        <Text style={styles.headerText}>{data.billNo}</Text>
+        <Text style={styles.headerText}>{data.retailerName}</Text>
       </Header>
       {/* Amount Input Container */}
       <View style={styles.amountContainer}>
         <View style={styles.inputContainerWrapper}>
           <Text style={styles.amountText}>Amount</Text>
-          <View style={styles.inputContainer}></View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              keyboardType="numeric"
+              value={amount.toString()}
+              onChangeText={onChangeText}
+              defaultValue={route.params.data.pendingAmount.toString()}
+            />
+          </View>
         </View>
       </View>
 
@@ -69,7 +78,14 @@ export default function PaymentScreen({navigation}) {
 
       {/* Confirm Button */}
       <TouchableOpacity
-        onPress={() => navigation.navigate('Cash')}
+        disabled={selected < 0}
+        onPress={() => {
+          navigation.navigate('Cash', {
+            data,
+            paymentMethod: PAYMENT_MODES[selected].mode,
+            amountPaid: amount,
+          });
+        }}
         style={[
           styles.confirmButton,
           selected >= 0 && styles.selectedConfirmButton,

@@ -1,6 +1,16 @@
 import {StyleSheet} from 'react-native';
 
 const styles = StyleSheet.create({
+  container: {flex: 1, backgroundColor: 'white'},
+  headerText: {
+    fontFamily: 'Poppins',
+    fontStyle: 'normal',
+    fontWeight: 400,
+    fontSize: 16,
+    lineHeight: 24,
+    color: '#ECECEC',
+    marginLeft: 24,
+  },
   amountContainer: {
     height: 180,
     width: '100%',

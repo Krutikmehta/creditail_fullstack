@@ -1,5 +1,23 @@
 import {StyleSheet} from 'react-native';
 const styles = StyleSheet.create({
+  container: {flex: 1, backgroundColor: 'white'},
+  statesText: {
+    fontFamily: 'Poppins',
+    fontStyle: 'normal',
+    fontWeight: 400,
+    fontSize: 20,
+    lineHeight: 20,
+    color: 'black',
+  },
+  headerText: {
+    fontFamily: 'Poppins',
+    fontStyle: 'normal',
+    fontWeight: 400,
+    fontSize: 16,
+    lineHeight: 24,
+    color: '#ECECEC',
+    marginLeft: 24,
+  },
   flatlist: {flex: 1, backgroundColor: '#EFEFEF'},
   invoiceCard: {
     height: 63,

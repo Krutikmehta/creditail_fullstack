@@ -8,6 +8,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#188748',
     gap: 25,
   },
+  statesText: {
+    fontFamily: 'Poppins',
+    fontStyle: 'normal',
+    fontWeight: 400,
+    fontSize: 20,
+    lineHeight: 20,
+    color: 'black',
+  },
   tickImage: {
     height: 120,
     aspectRatio: 1,
