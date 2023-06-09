@@ -20,7 +20,6 @@ export default function CashScreen(props) {
       })
       .catch(e => {
         setState('error');
-        console.log(e);
       })
       .finally(() => {
         setTimeout(() => {
@@ -47,9 +46,11 @@ export default function CashScreen(props) {
   }
   return (
     <View style={styles.container}>
+      {/* tick image */}
       <View>
         <Image source={tickmark} style={styles.tickImage} />
       </View>
+      {/* bill details */}
       <View style={styles.invoiceDetailsView}>
         <Text style={styles.billNoText}>{data.billNo}</Text>
         <Text style={styles.cashText}>${route.params.amountPaid}</Text>
@@ -57,12 +58,14 @@ export default function CashScreen(props) {
       <View>
         <Text style={styles.merchantText}>{data.retailerName}</Text>
       </View>
+      {/* payment mode */}
       <View style={styles.cashDetailsView}>
         <View style={styles.dashedLine}></View>
         <Text style={styles.paymentModeText}>
           Paid By {route.params.paymentMethod}
         </Text>
       </View>
+      {/* redirection info */}
       <View style={styles.redirectingView}>
         <Text style={styles.redirectingText}>Redirecting to home screen..</Text>
       </View>

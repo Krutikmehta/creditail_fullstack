@@ -1,4 +1,12 @@
-import {View, Text, TouchableOpacity, TextInput, Alert} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  Alert,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Header from '../components/Header';
 import axios from 'axios';
@@ -25,7 +33,7 @@ export default function PaymentScreen(props) {
   };
 
   const onChangeText = input => {
-    if (input <= data.pendingAmount) {
+    if (!input || (input <= data.pendingAmount && input > 0)) {
       setAmount(input);
       return;
     }
@@ -43,61 +51,63 @@ export default function PaymentScreen(props) {
     );
   };
   return (
-    <View style={styles.container}>
-      {/* header */}
-      <Header navigation={navigation}>
-        <Text style={styles.headerText}>{data.billNo}</Text>
-        <Text style={styles.headerText}>{data.retailerName}</Text>
-      </Header>
-      {/* Amount Input Container */}
-      <View style={styles.amountContainer}>
-        <View style={styles.inputContainerWrapper}>
-          <Text style={styles.amountText}>Amount</Text>
-          <View style={styles.inputContainer}>
-            <TextInput
-              keyboardType="numeric"
-              value={amount.toString()}
-              onChangeText={onChangeText}
-              defaultValue={route.params.data.pendingAmount.toString()}
-            />
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        {/* header */}
+        <Header navigation={navigation}>
+          <Text style={styles.headerText}>{data.billNo}</Text>
+          <Text style={styles.headerText}>{data.retailerName}</Text>
+        </Header>
+        {/* Amount Input Container */}
+        <View style={styles.amountContainer}>
+          <View style={styles.inputContainerWrapper}>
+            <Text style={styles.amountText}>Amount</Text>
+            <View style={styles.inputContainer}>
+              <TextInput
+                keyboardType="numeric"
+                value={amount.toString()}
+                onChangeText={onChangeText}
+                defaultValue={route.params.data.pendingAmount.toString()}
+              />
+            </View>
           </View>
         </View>
-      </View>
 
-      {/* Payment Mode */}
-      <View style={styles.paymentsViewWrapper}>
-        <View style={styles.paymentsView}>
-          <Text style={styles.paymentMethodText}>Choose Payment Method</Text>
-          <View style={styles.paymentModesView}>
-            {PAYMENT_MODES.map((item, index) => {
-              return paymentCard({item, index});
-            })}
+        {/* Payment Mode */}
+        <View style={styles.paymentsViewWrapper}>
+          <View style={styles.paymentsView}>
+            <Text style={styles.paymentMethodText}>Choose Payment Method</Text>
+            <View style={styles.paymentModesView}>
+              {PAYMENT_MODES.map((item, index) => {
+                return paymentCard({item, index});
+              })}
+            </View>
           </View>
         </View>
-      </View>
 
-      {/* Confirm Button */}
-      <TouchableOpacity
-        disabled={selected < 0}
-        onPress={() => {
-          navigation.navigate('Cash', {
-            data,
-            paymentMethod: PAYMENT_MODES[selected].mode,
-            amountPaid: amount,
-          });
-        }}
-        style={[
-          styles.confirmButton,
-          selected >= 0 && styles.selectedConfirmButton,
-        ]}>
-        <Text
+        {/* Confirm Button */}
+        <TouchableOpacity
+          disabled={selected < 0}
+          onPress={() => {
+            navigation.navigate('Cash', {
+              data,
+              paymentMethod: PAYMENT_MODES[selected].mode,
+              amountPaid: amount,
+            });
+          }}
           style={[
-            styles.confirmText,
-            selected >= 0 && styles.selectedConfirmText,
+            styles.confirmButton,
+            selected >= 0 && styles.selectedConfirmButton,
           ]}>
-          Confirm
-        </Text>
-      </TouchableOpacity>
-    </View>
+          <Text
+            style={[
+              styles.confirmText,
+              selected >= 0 && styles.selectedConfirmText,
+            ]}>
+            Confirm
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }

@@ -25,12 +25,10 @@ export default function Homescreen({navigation}) {
         .get('https://creditail-backend.vercel.app/api/v1/invoices')
         .then(resp => {
           setData(resp.data.invoices);
-          console.log(JSON.stringify(resp.data.invoices));
           setState('success');
         })
         .catch(e => {
           setState('error');
-          console.log(e);
         });
     }
   }, [isFocused]);
@@ -59,7 +57,7 @@ export default function Homescreen({navigation}) {
   return (
     <View style={styles.container}>
       {/* header */}
-      <Header>
+      <Header showBackButton={false}>
         <Text style={styles.headerText}>Invoices</Text>
       </Header>
 

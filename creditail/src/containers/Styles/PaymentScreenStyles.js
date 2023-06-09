@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins',
     fontStyle: 'normal',
     fontWeight: 400,
-    fontSize: 11,
+    fontSize: 12,
     lineHeight: 17,
     color: '#C4C4C4',
     marginBottom: 2,
