@@ -39,7 +39,7 @@ export default function PaymentScreen(props) {
     }
     Alert.alert(
       'Invalid amount',
-      `Please enter an amount less than ${data.pendingAmount}`,
+      `Please enter an amount between 0 and ${data.pendingAmount}`,
       [
         {
           text: 'Cancel',
